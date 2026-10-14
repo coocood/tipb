@@ -7,6 +7,9 @@ edition = "2018"
 default = ["protobuf-codec"]
 protobuf-codec = ["protobuf-build/protobuf-codec", "grpcio/protobuf-codec"]
 prost-codec = ["prost", "prost-derive", "lazy_static", "protobuf-build/prost-codec", "grpcio/prost-codec"]
+# rust-protobuf messages without grpcio, for users that serve gRPC with tonic.
+# No tonic services are generated yet because no Rust user needs them.
+tonic-protobuf-codec = ["protobuf-build/protobuf-codec"]
 
 [lib]
 name = "tipb"
@@ -23,7 +26,7 @@ futures = "0.3.5"
 # And we need to keep Cargo.lock in track, so CI can choose a correct version.
 #
 # See https://doc.rust-lang.org/cargo/reference/resolver.html#semver-compatibility
-grpcio = { version = "0.*", default-features = false }
+grpcio = { version = "0.*", default-features = false, optional = true }
 [build-dependencies]
 protobuf-build = { version = "0.*", default-features = false }
 
